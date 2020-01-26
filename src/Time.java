@@ -17,9 +17,9 @@ public class Time {
              PrintWriter printWriter = new PrintWriter(new BufferedOutputStream(new FileOutputStream(newTime)))) {
 
             while (scanner.hasNextLine()) {
-                Matcher matcher1 = pattern1.matcher(scanner.nextLine());
-                while (matcher1.find()) {
-                    name.add(matcher1.group());
+                Matcher matcher = pattern1.matcher(scanner.nextLine());
+                while (matcher.find()) {
+                    name.add(matcher.group());
                 }
             }
             Scanner scanner1 = new Scanner(new BufferedReader(new FileReader("timetable.txt")));
@@ -28,22 +28,18 @@ public class Time {
                 while (matcher.find()) {
                     time.add(matcher.group());
                 }
-
             }
-            ArrayList<Integer> a = new ArrayList<>();
+            ArrayList<Integer> timeInMinutes = new ArrayList<>();
             for (int i = 0; i < time.size(); i += 2) {
-                a.add(Integer.parseInt(time.get(i)) * 60 + Integer.parseInt(time.get(i + 1)));
-            }
-            for (int i = 1; i < a.size(); i++) {
-                time1.add(a.get(i) - a.get(i - 1));
+                timeInMinutes.add(Integer.parseInt(time.get(i)) * 60 + Integer.parseInt(time.get(i + 1)));
             }
             int countTime = 0;
-            for (int i = 0; i < time1.size(); i++) {
-                countTime += time1.get(i);
+            for (int i = 1; i < timeInMinutes.size(); i++) {
+                time1.add(timeInMinutes.get(i) - timeInMinutes.get(i - 1));
+                countTime += time1.get(i-1);
             }
             for (int i = 0; i < time1.size(); i++) {
-                int percent;
-                percent = time1.get(i) * 100 / countTime;
+                int percent = time1.get(i) * 100 / countTime;
                 printWriter.write(name.get(i) + ": " + time1.get(i) + " минут " + percent + "%\n");
             }
             printWriter.write(name.get(name.size()-1));
