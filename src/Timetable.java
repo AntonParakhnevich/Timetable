@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Timetable {
@@ -15,6 +14,7 @@ public class Timetable {
         Pattern pattern2 = Pattern.compile("[а-яА-Я]+(\\s[а-яА-Я]+)?");
         String[] strings1 = null;
         String[] strings2 = null;
+
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("timetable.txt")));
              PrintWriter printWriter = new PrintWriter(new BufferedOutputStream(new FileOutputStream(newTimetable)))) {
             while (scanner.hasNextLine()) {
@@ -31,6 +31,7 @@ public class Timetable {
                 printWriter.write(time.get(j) + "- " + time.get(j + 1) + name.get(j ));
                 printWriter.write("\n");
             }
+            printWriter.write(time.get(time.size()-1)+name.get(name.size()-1));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
